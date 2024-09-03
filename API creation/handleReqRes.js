@@ -39,28 +39,24 @@ handler.handleReqRes = (req,res) =>{
 
     const chosenHandler = routes[trimedPath] ? routes[trimedPath] : notFoundHandler;
 
-    chosenHandler(requestProperties, (statusCode,payLoad) =>{
-        statusCode = typeof(statusCode) === 'number' ? statusCode : 500;
-        payLoad = typeof(payLoad) === 'object' ? payLoad : {};
-        //payLoad object k response hisebe pathaite hoile json formate lagbe 
-        
-        const payLoadString = JSON.stringify(payLoad);
-
-        // return the final response 
-
-        res.writeHead(statusCode);
-        res.end(payLoadString);
-
-
-    });
-
     req.on('data', (buffer) =>{
         realData += decoder.write(buffer);
     });
 
     req.on('end' , () =>{
         realData += decoder.end();
-        console.log(realData);
+        
+        chosenHandler(requestProperties, (statusCode,payLoad) =>{
+            statusCode = typeof(statusCode) === 'number' ? statusCode : 500;
+            payLoad = typeof(payLoad) === 'object' ? payLoad : {};
+            //payLoad object k response hisebe pathaite hoile json formate lagbe 
+            
+            const payLoadString = JSON.stringify(payLoad);
+            // return the final response 
+            res.writeHead(statusCode);
+            res.end(payLoadString);
+        });
+        
         res.end('Hello World BD!');
     });
    //respose handle

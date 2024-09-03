@@ -9,12 +9,13 @@ Date : 19-08-24
 const http = require('http');
 const { Console } = require('console');
 const {handleReqRes} = require('./handleReqRes');
+const environment = require('./handlers/environment');
 
 //app object - module scafoulding
 const app = {};
 
 // config
-
+// 
 app.config = {
     port : 3000,
 };
@@ -22,7 +23,8 @@ app.config = {
 //create the server 
 app.createServer = () => {
     const server = http.createServer(app.handleReqRes);
-
+    
+    //we can use the environment object and remove the app.config object...
     server.listen(app.config.port,() =>{
         console.log(`listening to port ${app.config.port}`);
 
