@@ -32,8 +32,6 @@ app.createServer = () => {
 
 };
 
-
-
 // handle req and res
 app.handleReqRes = handleReqRes;
 
