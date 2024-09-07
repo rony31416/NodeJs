@@ -10,6 +10,28 @@ const http = require('http');
 const { Console } = require('console');
 const {handleReqRes} = require('./handleReqRes');
 const environment = require('./handlers/environment');
+const data = require('./lib/data');
+
+
+//testing the file system
+// data.create('test','newFile',{name : 'Rony',Age : '23'},function(err){
+    // console.log(`error is ` , err);
+// });
+
+
+// data.update('test','newFile',{ 'name' : 'badhon' , 'Age'  : '10'},(err)=>{
+    // console.log(err);
+// });
+
+data.delete('test','newFile',(err)=>{
+    console.log(err);
+});
+// 
+// 
+
+
+
+
 
 //app object - module scafoulding
 const app = {};
