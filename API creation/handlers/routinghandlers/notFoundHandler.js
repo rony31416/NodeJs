@@ -7,7 +7,7 @@ const handler = {};
 
 handler.notFoundHandler = (requestProperties,callback) =>{
     callback(404,{
-        message : 'your requested url is not found ',
+        message : 'your requested url is not found KENO VAI? ',
     });
   
 };

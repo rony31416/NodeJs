@@ -4,6 +4,7 @@ const url = require('url');
 const {StringDecoder} = require('string_decoder');
 const routes = require('./routing');
 const {notFoundHandler} = require('./handlers/routinghandlers/notFoundHandler');
+const {parseJSON} = require('./utilities');
 
 
 
@@ -37,6 +38,8 @@ handler.handleReqRes = (req,res) =>{
 
     let realData = '';
 
+    console.log(trimedPath);
+
     const chosenHandler = routes[trimedPath] ? routes[trimedPath] : notFoundHandler;
 
     req.on('data', (buffer) =>{
@@ -45,19 +48,22 @@ handler.handleReqRes = (req,res) =>{
 
     req.on('end' , () =>{
         realData += decoder.end();
+
+        requestProperties.body = parseJSON(realData);
         
-        chosenHandler(requestProperties, (statusCode,payLoad) =>{
-            statusCode = typeof(statusCode) === 'number' ? statusCode : 500;
-            payLoad = typeof(payLoad) === 'object' ? payLoad : {};
-            //payLoad object k response hisebe pathaite hoile json formate lagbe 
-            
-            const payLoadString = JSON.stringify(payLoad);
-            // return the final response 
+        chosenHandler(requestProperties, (statusCode, payload) => {
+            statusCode = typeof statusCode === 'number' ? statusCode : 500;
+            payload = typeof payload === 'object' ? payload : {};
+
+            const payloadString = JSON.stringify(payload);
+
+            // return the final response
+            res.setHeader('Content-Type', 'application/json');
             res.writeHead(statusCode);
-            res.end(payLoadString);
+            res.end(payloadString);
         });
         
-        res.end('Hello World BD!');
+        //res.end('Hello World BD!');
     });
    //respose handle
 };
