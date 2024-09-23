@@ -26,9 +26,9 @@ const data = require('./lib/data');
     // console.log(err);
 // });
 // 
-data.delete('users','newFile',(err)=>{
-    console.log(err);
-});
+// data.delete('users','newFile',(err)=>{
+    // console.log(err);
+// });
 // 
 // 
 
